@@ -1,0 +1,11 @@
+* {
+	color: #365264;
+}
+
+.jumbotron, #submit{
+	background-color: #cfebfd;
+}
+
+.panel-heading{
+	background-color: #cfebfd !important;
+}

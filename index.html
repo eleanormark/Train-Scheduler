@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="text-center">Sky Train</h1>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Current Train Schedule<span id="datetime"></span></h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead> 
+              <tr> 
+                <th>Train Name</th> 
+                <th>Destination</th> 
+                <th>Frequency (min)</th> 
+                <th>Next Arrival</th> 
+                <th>Minutes Away</th> 
+              </tr> 
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Add Train</h3>
+        </div>
+        <div class="panel-body">
+          <form>
+            <div class="form-group">
+              <label for="inputTrainName">Train Name</label>
+              <input type="text" class="form-control" id="inputTrainName">
+            </div>
+            <div class="form-group">
+              <label for="inputDestination">Destination</label>
+              <input type="text" class="form-control" id="inputDestination">
+            </div>
+            <div class="form-group">
+              <label for="inputFirstTrainTime">First Train Time (24-Hour Time)</label>
+              <input type="text" class="form-control" id="inputFirstTrainTime" placeholder="hh:mm">
+            </div>
+            <div class="form-group">
+              <label for="inputFrequency">Frequency min</label>
+              <input type="number" class="form-control" id="inputFrequency">
+            </div>
+            <button type="submit" class="btn btn-default" id="submit">Submit</button>
+          </form>
+        </div>
+
+  </div> 
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
+  </script>
+
+  <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
+
+  <script type="text/javascript" src="assets/js/app.js"></script>
+</body>
+</html>
