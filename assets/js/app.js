@@ -50,6 +50,19 @@ $("#submit").on("click", function(event) {
 
 });
 
+// Capture Button Click
+
+
+ $(document).on('click', '.remove', function() { 
+
+    event.preventDefault();
+  
+      var key = $(this).data("id");
+  database.ref('trains').child(key).remove();
+
+});
+
+
 // Firebase watcher user input + initial loader HINT: .on("value")
 database.ref('trains').on("value", function(snapshot) {
 
@@ -120,6 +133,11 @@ function writeHTML(sv, svArr) {
     // Next Train
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
     console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm a"));
+    console.log(Object.keys(sv));
+    var objKeyArr = Object.keys(sv);
+    console.log(objKeyArr[index]);
+
+
 
     $("tbody").append( "<tr>" + 
     "<td>" + sv[svArr[index]].trainName + "</td>" +
@@ -127,6 +145,7 @@ function writeHTML(sv, svArr) {
     "<td>" + sv[svArr[index]].frequency + "</td>" +
     "<td>" + moment(nextTrain).format("hh:mm a") + "</td>" +
     "<td>" + tMinutesTillTrain + "</td>" +
+    "<td>" + "<button class='remove' data-id=" + objKeyArr[index] + "> Remove </button>" + "</td>" +
     "</tr>");
   }
 }
