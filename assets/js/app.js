@@ -45,7 +45,8 @@ $("#submit").on("click", function(event) {
     trainName: trainName,
     destination: destination,
     firstTime: firstTime,
-    frequency: frequency
+    frequency: frequency,
+    arrivalTime: "undefined"
   });
 });
 
@@ -65,16 +66,34 @@ $(document).on('click', '.update', function() {
     var destination = $tr.find('td:nth-child(2)').text();
     var arrivalTime = $tr.find('td:nth-child(4)').text();
 
-    console.log(trainName);
-
-    //redefine first train
-    var firstTime = moment(arrivalTime, ["h:mm A"]).format("HH:mm");
+    var firstTime = moment(arrivalTime, ["hh:mm A"]).format("HH:mm");
 
     database.ref('trains').child(key).update({
       trainName: trainName,
       destination: destination,
-      firstTime: firstTime
+      arrivalTime: arrivalTime,
+      firstTime: firstTime 
     });
+
+    // var arrivalTimeObj = moment(arrivalTime, ["hh:mm A"]).format("HH:mm");
+    var arrivalTimeConverted = moment(arrivalTime, "hh:mm A").subtract(1, "years");
+    var xtMinutesTillTrain = 525600 - moment().diff(moment(arrivalTimeConverted ), "minutes");
+    if (xtMinutesTillTrain == 0) {
+      xtMinutesTillTrain = 0;
+    } 
+
+    if (xtMinutesTillTrain < 0) {
+          xtMinutesTillTrain = 1440 + xtMinutesTillTrain;
+        } 
+      //reset timer to use use time frequency
+      setTimeout(function(){ 
+
+        arrivalTime = 'undefined';
+        database.ref('trains').child(key).update({
+          arrivalTime: arrivalTime,
+        });
+
+    }, xtMinutesTillTrain * 60 * 1000 - 500 );
 });
 
 
@@ -147,22 +166,43 @@ function writeHTML(sv, svArr) {
 
     // Next Train
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    var formattedNextTrain = moment(nextTrain).format("hh:mm a");
     console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm a"));
     console.log(Object.keys(sv));
     var objKeyArr = Object.keys(sv);
     console.log(objKeyArr[index]);
 
+    if(sv[svArr[index]].arrivalTime !== 'undefined')
+    {
+      formattedNextTrain = sv[svArr[index]].arrivalTime;
+      var arrivalTimeObj = moment(formattedNextTrain , ["hh:mm A"]).format("HH:mm");
+      var arrivalTimeConverted = moment(sv[svArr[index]].arrivalTime, "hh:mm A").subtract(1, "years");
+      var tMinutesTillTrain = 525600 - moment().diff(moment(arrivalTimeConverted ), "minutes");
+
+      if (tMinutesTillTrain == 0) {
+          tMinutesTillTrain = sv[svArr[index]].frequency;
+        } 
+      if (tMinutesTillTrain < 0) {
+          tMinutesTillTrain = 1440 + tMinutesTillTrain;
+        }        
+    }
+  
+    console.log(Object.keys(sv));
+    var objKeyArr = Object.keys(sv);
+    console.log(objKeyArr[index]);
+
     $("tbody").append( "<tr>" + 
-    "<td contenteditable>" + sv[svArr[index]].trainName + "</td>" +
-    "<td contenteditable>" + sv[svArr[index]].destination + "</td>" +
+    "<td><div contenteditable>" + sv[svArr[index]].trainName + "</div></td>" +
+    "<td> <div contenteditable>" + sv[svArr[index]].destination + "</div></td>" +
     "<td>" + sv[svArr[index]].frequency + "</td>" +
-    "<td contenteditable>" + moment(nextTrain).format("hh:mm a") + "</td>" +
+    "<td> <div contenteditable>" +  formattedNextTrain + "</div></td>" +
     "<td>" + tMinutesTillTrain + "</td>" +
     "<td>" + "<button type='submit' class='btn btn-default btn-xs update' data-id=" + objKeyArr[index] + "> update </button>" + "</td>" +
     "<td>" + "<button type='submit' class='btn btn-default btn-xs remove' data-id=" + objKeyArr[index] + "> Remove </button>" + "</td>" +
     "</tr>");
+      }
   }
-}
+
 
 
 
