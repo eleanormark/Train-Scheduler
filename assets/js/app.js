@@ -50,16 +50,11 @@ $("#submit").on("click", function(event) {
 
 });
 
-// Capture Button Click
-
-
- $(document).on('click', '.remove', function() { 
-
+// Capture Remove Button Click
+$(document).on('click', '.remove', function() { 
     event.preventDefault();
-  
-      var key = $(this).data("id");
-  database.ref('trains').child(key).remove();
-
+    var key = $(this).data("id");
+    database.ref('trains').child(key).remove();
 });
 
 
@@ -136,8 +131,6 @@ function writeHTML(sv, svArr) {
     console.log(Object.keys(sv));
     var objKeyArr = Object.keys(sv);
     console.log(objKeyArr[index]);
-
-
 
     $("tbody").append( "<tr>" + 
     "<td>" + sv[svArr[index]].trainName + "</td>" +
