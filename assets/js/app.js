@@ -47,7 +47,6 @@ $("#submit").on("click", function(event) {
     firstTime: firstTime,
     frequency: frequency
   });
-
 });
 
 // Capture Remove Button Click
@@ -55,6 +54,27 @@ $(document).on('click', '.remove', function() {
     event.preventDefault();
     var key = $(this).data("id");
     database.ref('trains').child(key).remove();
+});
+
+// Capture Update Button Click
+$(document).on('click', '.update', function() { 
+    event.preventDefault();
+    var key = $(this).data("id");
+    var $tr = $(this).closest("tr");
+    var trainName = $tr.find('td:first-child').text();
+    var destination = $tr.find('td:nth-child(2)').text();
+    var arrivalTime = $tr.find('td:nth-child(4)').text();
+
+    console.log(trainName);
+
+    //redefine first train
+    var firstTime = moment(arrivalTime, ["h:mm A"]).format("HH:mm");
+
+    database.ref('trains').child(key).update({
+      trainName: trainName,
+      destination: destination,
+      firstTime: firstTime
+    });
 });
 
 
@@ -133,12 +153,13 @@ function writeHTML(sv, svArr) {
     console.log(objKeyArr[index]);
 
     $("tbody").append( "<tr>" + 
-    "<td>" + sv[svArr[index]].trainName + "</td>" +
-    "<td>" + sv[svArr[index]].destination + "</td>" +
+    "<td contenteditable>" + sv[svArr[index]].trainName + "</td>" +
+    "<td contenteditable>" + sv[svArr[index]].destination + "</td>" +
     "<td>" + sv[svArr[index]].frequency + "</td>" +
-    "<td>" + moment(nextTrain).format("hh:mm a") + "</td>" +
+    "<td contenteditable>" + moment(nextTrain).format("hh:mm a") + "</td>" +
     "<td>" + tMinutesTillTrain + "</td>" +
-    "<td>" + "<button class='remove' data-id=" + objKeyArr[index] + "> Remove </button>" + "</td>" +
+    "<td>" + "<button type='submit' class='btn btn-default btn-xs update' data-id=" + objKeyArr[index] + "> update </button>" + "</td>" +
+    "<td>" + "<button type='submit' class='btn btn-default btn-xs remove' data-id=" + objKeyArr[index] + "> Remove </button>" + "</td>" +
     "</tr>");
   }
 }

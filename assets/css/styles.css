@@ -2,8 +2,12 @@
 	color: #365264;
 }
 
-.jumbotron, #submit{
+.jumbotron, .btn:hover{
 	background-color: #cfebfd;
+}
+
+.btn {
+	background-color: #e0e0e0;
 }
 
 .panel-heading{
