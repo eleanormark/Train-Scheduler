@@ -1,23 +1,33 @@
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyCjyzBUnDUtoNfp9BtzD_d2OQO6eocYGvw",
-  authDomain: "sky-train.firebaseapp.com",
-  databaseURL: "https://sky-train.firebaseio.com",
-  storageBucket: "sky-train.appspot.com",
-  messagingSenderId: "13910311656"
+  apiKey: "AIzaSyCpjYrqFlKPACTIcFzdo_A0nysnb4kJINE",
+  authDomain: "skytrain-e7b1f.firebaseapp.com",
+  databaseURL: "https://skytrain-e7b1f.firebaseio.com",
+  storageBucket: "skytrain-e7b1f.appspot.com",
+  messagingSenderId: "242261402778"
 };
 
 firebase.initializeApp(config);
-
-// Create a variable to reference the database.
-var database = firebase.database();
 
 // Initial Values
 var trainName = "";
 var destination = "";
 var firstTime = "";
 var frequency = 0;
+var count = 0;
+
+//snapshop value for trains
+var sv = [];
+var svArr = [];
+
+// Create a variable to reference the database.
+var database = firebase.database();
+
+  database.ref('tCheck').set({
+    updateMin: count
+  });
+
 
 // Capture Button Click
 $("#submit").on("click", function(event) {
@@ -29,8 +39,9 @@ $("#submit").on("click", function(event) {
   firstTime = $("#inputFirstTrainTime").val().trim();
   frequency = $("#inputFrequency").val().trim();
 
+
   // Code for handling the push
-  database.ref().push({
+  database.ref('trains').push({
     trainName: trainName,
     destination: destination,
     firstTime: firstTime,
@@ -39,17 +50,50 @@ $("#submit").on("click", function(event) {
 
 });
 
-// Firebase watcher + initial loader HINT: .on("value")
-database.ref().on("value", function(snapshot) {
+// Firebase watcher user input + initial loader HINT: .on("value")
+database.ref('trains').on("value", function(snapshot) {
 
   // storing the snapshot.val() in a variable for convenience
-  var sv = snapshot.val();
+  sv = snapshot.val();
   
   // Getting an array of each key In the snapshot object
-  var svArr = Object.keys(sv);
+  svArr = Object.keys(sv);
+
+  writeHTML(sv, svArr);
+
+  // Handle the errors
+}, function(errorObject) {
+  console.log("Errors handled: " + errorObject.code);
+});
 
 
-  $( "tbody" ).empty();
+// Firebase watcher for real minute update + initial loader HINT: .on("value")
+database.ref('tCheck').on("value", function() {
+
+  writeHTML(sv, svArr);
+
+  // Handle the errors
+}, function(errorObject) {
+  console.log("Errors handled: " + errorObject.code);
+});
+
+setInterval(checkTime, 500);
+
+function checkTime() {
+
+  var d = new Date();
+  var seconds = d.getSeconds();
+
+  if ( seconds === 0) {
+    database.ref('tCheck').update({
+    updateMin: count++
+    });
+  }
+}
+
+function writeHTML(sv, svArr) {
+    $( "tbody" ).empty();
+  console.log("length: " + svArr.length)
 
   for (var index = 0; index < svArr.length; index++) { 
 
@@ -85,18 +129,9 @@ database.ref().on("value", function(snapshot) {
     "<td>" + tMinutesTillTrain + "</td>" +
     "</tr>");
   }
-
-
-  // Handle the errors
-}, function(errorObject) {
-  console.log("Errors handled: " + errorObject.code);
-});
-
-
-function update() {
-    location.reload();
 }
-setInterval(update, 60000);
+
+
 
 
 
