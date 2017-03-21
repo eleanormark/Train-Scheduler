@@ -9,7 +9,8 @@ var config = {
 };
 
 firebase.initializeApp(config);
-// login code
+
+// Github Auth
 var provider = new firebase.auth.GithubAuthProvider();
 
 function githubSignin() {
@@ -40,6 +41,44 @@ function githubSignout(){
       console.log('Signout successful!')
    }, function(error) {
       console.log('Signout failed')
+   });
+}
+
+
+// Google Auth 
+
+var providerGoogle = new firebase.auth.GoogleAuthProvider();
+
+function googleSignin() {
+   firebase.auth()
+   
+   .signInWithPopup(providerGoogle).then(function(result) {
+      var token = result.credential.accessToken;
+      var user = result.user;
+    
+      console.log(token)
+      console.log(user)
+      $(".signOut, panel").show();
+      $( ".signIn" ).hide();
+
+   }).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    
+      console.log(error.code)
+      console.log(error.message)
+   });
+}
+
+function googleSignout() {
+   firebase.auth().signOut()
+  
+   .then(function() {
+      $(".signOut, panel").hide();
+      $( ".signIn" ).show();
+      console.log('Signout Succesfull')
+   }, function(error) {
+      console.log('Signout Failed')  
    });
 }
 
