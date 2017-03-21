@@ -20,7 +20,7 @@ function githubSignin() {
       var token = result.credential.accessToken;
       var user = result.user;
       $(".signOut, .panel").show();
-      $( ".signIn signOutGoogle").hide();
+      $( ".signIn, signOutGoogle").hide();
       console.log(token)
       console.log(user)
    }).catch(function(error) {
