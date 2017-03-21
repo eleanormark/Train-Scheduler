@@ -18,7 +18,8 @@ function githubSignin() {
    .then(function(result) {
       var token = result.credential.accessToken;
       var user = result.user;
-    
+      $(".signOut, panel").show();
+      $( ".signIn" ).hide();
       console.log(token)
       console.log(user)
    }).catch(function(error) {
@@ -34,12 +35,13 @@ function githubSignout(){
    firebase.auth().signOut()
    
    .then(function() {
+      $(".signOut, panel").hide();
+      $( ".signIn" ).show();
       console.log('Signout successful!')
    }, function(error) {
       console.log('Signout failed')
    });
 }
-
 
 
 // train scheduler code

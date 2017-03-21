@@ -13,3 +13,7 @@
 .panel-heading{
 	background-color: #cfebfd !important;
 }
+
+.panel, .signOut {
+	display: none;
+}
