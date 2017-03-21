@@ -17,3 +17,7 @@
 .panel, .signOut {
 	display: none;
 }
+
+.signIn, .signOut {
+	background-color: white;
+}

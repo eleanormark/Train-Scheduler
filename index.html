@@ -19,10 +19,13 @@
   <div class="container">
     <div class="jumbotron">
       <h1 class="text-center">Sky Train</h1>
-      <button class="signIn" onclick = "githubSignin()">Github Signin</button>
-      <button class="signOut" onclick = "githubSignout()">Github Signout</button>
-      <button class="signIn" onclick = "googleSignin()">Google Signin</button>
-      <button class="signOut" onclick = "googleSignout()">Google Signout</button>
+      <button type="submit" class="signIn btn btn-default" onclick = "githubSignin()">Github Sign in</button>
+      <button type="submit" class="signOut signOutGithub btn btn-default" onclick = "githubSignout()">  Github  Sign out
+      </button>
+      <button type="submit" class="signIn btn btn-default" onclick = "googleSignin()">Google Sign in</button>
+      <button type="submit" class="signOut signOutGoogle btn btn-default" onclick = "googleSignout()">
+      Google Sign out
+      </button>
     </div>
 
     <div class="panel panel-default">

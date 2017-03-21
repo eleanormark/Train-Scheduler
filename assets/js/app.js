@@ -19,8 +19,8 @@ function githubSignin() {
    .then(function(result) {
       var token = result.credential.accessToken;
       var user = result.user;
-      $(".signOut, panel").show();
-      $( ".signIn" ).hide();
+      $(".signOut, .panel").show();
+      $( ".signIn signOutGoogle").hide();
       console.log(token)
       console.log(user)
    }).catch(function(error) {
@@ -36,7 +36,7 @@ function githubSignout(){
    firebase.auth().signOut()
    
    .then(function() {
-      $(".signOut, panel").hide();
+      $(".signOut, .panel").hide();
       $( ".signIn" ).show();
       console.log('Signout successful!')
    }, function(error) {
@@ -58,8 +58,8 @@ function googleSignin() {
     
       console.log(token)
       console.log(user)
-      $(".signOut, panel").show();
-      $( ".signIn" ).hide();
+      $(".signOut, .panel").show();
+      $( ".signIn, signOutGithub" ).hide();
 
    }).catch(function(error) {
       var errorCode = error.code;
@@ -74,7 +74,7 @@ function googleSignout() {
    firebase.auth().signOut()
   
    .then(function() {
-      $(".signOut, panel").hide();
+      $(".signOut, .panel").hide();
       $( ".signIn" ).show();
       console.log('Signout Succesfull')
    }, function(error) {
