@@ -75,7 +75,7 @@ function googleSignout() {
   
    .then(function() {
       $(".signOut, .panel").hide();
-      $( ".signIn" ).show();
+      $(".signIn" ).show();
       console.log('Signout Succesfull')
    }, function(error) {
       console.log('Signout Failed')  
