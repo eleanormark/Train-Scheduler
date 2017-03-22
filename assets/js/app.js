@@ -20,7 +20,7 @@ function githubSignin() {
       var token = result.credential.accessToken;
       var user = result.user;
       $(".signOut, .panel").show();
-      $( ".signIn, signOutGoogle").hide();
+      $(".signIn, .signOutGoogle").hide();
       console.log(token)
       console.log(user)
    }).catch(function(error) {
@@ -37,7 +37,7 @@ function githubSignout(){
    
    .then(function() {
       $(".signOut, .panel").hide();
-      $( ".signIn" ).show();
+      $(".signIn").show();
       console.log('Signout successful!')
    }, function(error) {
       console.log('Signout failed')
@@ -59,7 +59,7 @@ function googleSignin() {
       console.log(token)
       console.log(user)
       $(".signOut, .panel").show();
-      $( ".signIn, signOutGithub" ).hide();
+      $( ".signIn, .signOutGithub" ).hide();
 
    }).catch(function(error) {
       var errorCode = error.code;
